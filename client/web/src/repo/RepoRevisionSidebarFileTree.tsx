@@ -23,11 +23,13 @@ import {
     LoadingSpinner,
     Tooltip,
     ErrorAlert,
+    LanguageIcon,
+    FileExtension,
 } from '@sourcegraph/wildcard'
 
 import type { FileTreeEntriesResult, FileTreeEntriesVariables } from '../graphql-operations'
 
-import { FILE_ICONS, FileExtension, getFileInfo } from './fileIcons'
+import { getFileInfo } from './fileIcons'
 import { FocusableTree, type FocusableTreeProps } from './RepoRevisionSidebarFocusableTree'
 
 import styles from './RepoRevisionSidebarFileTree.module.scss'
@@ -397,7 +399,6 @@ function renderNode({
     const submodule = entry?.submodule
     const url = entry?.url
     const fileInfo = getFileInfo(name, isBranch)
-    const fileIcon = FILE_ICONS.get(fileInfo.extension)
 
     if (error) {
         return <ErrorAlert {...props} className={classNames(props.className, 'm-0')} variant="note" error={error} />
@@ -482,11 +483,7 @@ function renderNode({
             <div className={styles.fileContainer}>
                 <div className={styles.iconContainer}>
                     {fileInfo.extension !== FileExtension.DEFAULT ? (
-                        <Icon
-                            as={fileIcon?.icon}
-                            className={classNames('mr-1', styles.icon, fileIcon?.iconClass)}
-                            aria-hidden={true}
-                        />
+                        <LanguageIcon language={fileInfo.extension} className="mr-1 flex-shrink-0" />
                     ) : (
                         <Icon
                             svgPath={

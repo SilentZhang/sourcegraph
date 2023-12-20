@@ -13,6 +13,8 @@ import {
     CardHeader,
     H2,
     Icon,
+    LanguageIcon,
+    FileExtension,
     Link,
     LinkOrSpan,
     LoadingSpinner,
@@ -25,7 +27,7 @@ import type { BlobFileFields, TreeHistoryFields } from '../../graphql-operations
 import { fetchBlob } from '../blob/backend'
 import { RenderedFile } from '../blob/RenderedFile'
 import { CommitMessageWithLinks } from '../commit/CommitMessageWithLinks'
-import { FILE_ICONS, FileExtension, getFileInfo } from '../fileIcons'
+import { getFileInfo } from '../fileIcons'
 
 import styles from './TreePagePanels.module.scss'
 
@@ -179,7 +181,6 @@ export const FilesCard: FC<FilePanelProps> = ({ entries, historyEntries, classNa
             <tbody>
                 {entries.map(entry => {
                     const fileInfo = getFileInfo(entry.name, entry.isDirectory)
-                    const fileIcon = FILE_ICONS.get(fileInfo.extension)
 
                     return (
                         <tr key={entry.name}>
@@ -195,11 +196,7 @@ export const FilesCard: FC<FilePanelProps> = ({ entries, historyEntries, classNa
                                     data-testid="tree-entry"
                                 >
                                     {fileInfo.extension !== FileExtension.DEFAULT ? (
-                                        <Icon
-                                            as={fileIcon?.icon}
-                                            className={classNames('mr-1', fileIcon?.iconClass)}
-                                            aria-hidden={true}
-                                        />
+                                        <LanguageIcon language={fileInfo.extension} className="mr-1 flex-shrink-0" />
                                     ) : (
                                         <Icon
                                             svgPath={entry.isDirectory ? mdiFolderOutline : mdiFileDocumentOutline}
