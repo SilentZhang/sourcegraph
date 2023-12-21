@@ -17,6 +17,8 @@ func With(projectID string) stack.NewStackOption {
 		var project *string
 		if projectID != "" {
 			project = pointers.Ptr(projectID)
+			// Make project ID available to custom TF
+			s.DynamicVariables["project_id"] = projectID
 		}
 		_ = google.NewGoogleProvider(s.Stack, pointers.Ptr("google"), &google.GoogleProviderConfig{
 			Project: project,
