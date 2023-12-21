@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/retry"
 	"github.com/sourcegraph/sourcegraph/internal/env"
+	"github.com/sourcegraph/sourcegraph/internal/grpc/retry"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 )
